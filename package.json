@@ -1,0 +1,27 @@
+{
+  "name": "solo_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emkerber/soloProject.git"
+  },
+  "author": "Liz Kerber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emkerber/soloProject/issues"
+  },
+  "homepage": "https://github.com/emkerber/soloProject#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "passport": "^0.3.2",
+    "pg": "^6.0.3"
+  }
+}
