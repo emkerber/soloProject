@@ -12,16 +12,21 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-function findByUsername(username, callback) {
+function findByPhoneNumber(phoneNumber, callback) {
+
   pool.connect(function(err, client, done) {
+
     if (err) {
       done();
+      console.log('Error connecting to pool');
       return callback(err);
     }
 
-    client.query('SELECT * FROM users WHERE username=$1;', [username], function(err, result) {
+    client.query('SELECT * FROM users WHERE phoneNumber=$1;', [phoneNumber], function(err, result) {
+
       if (err) {
         done();
+        console.log('Error regarding findByPhoneNumber query');
         return callback(err);
       }
 
@@ -31,20 +36,25 @@ function findByUsername(username, callback) {
   });
 }
 
-function create(username, password, callback) {
+function create(phoneNumber, password, callback) {
+
   bcrypt.hash(password, SALT_WORK_FACTOR, function(err, hash) {
+
     pool.connect(function(err, client, done) {
+
       if (err) {
         done();
+        console.log('Error connecting to pool while hashing password');
         return callback(err);
       }
 
-      client.query('INSERT INTO users (username, password) ' +
-      'VALUES ($1, $2) RETURNING id, username;', [username, hash],
+      client.query('INSERT INTO users (phoneNumber, password) ' +
+      'VALUES ($1, $2) RETURNING id, phoneNumber;', [phoneNumber, hash],
       function(err, result) {
 
         if (err) {
           done();
+          console.log('Error adding user and their password to table');
           return callback(err);
         }
 
@@ -55,15 +65,17 @@ function create(username, password, callback) {
   });
 }
 
-function findAndComparePassword(username, candidatePassword, callback) {
+function findAndComparePassword(phoneNumber, candidatePassword, callback) {
 
-  findByUsername(username, function(err, user) {
+  findByPhoneNumber(phoneNumber, function(err, user) {
 
     if (err) {
+      console.log('Error finding by phoneNumber to compare passwords');
       return callback(err);
     }
 
     if (!user) {
+      console.log('User does not exist!');
       return callback(null, false);
     }
 
@@ -81,7 +93,7 @@ function findAndComparePassword(username, candidatePassword, callback) {
 }
 
 module.exports = {
-  findByUsername: findByUsername,
+  findByPhoneNumber: findByPhoneNumber,
   create: create,
   findAndComparePassword: findAndComparePassword
 };

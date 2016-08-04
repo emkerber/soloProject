@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="dingDogSwitchApp">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Ding Dog Switch</title>
+    <script src="../vendors/angular/angular.min.js" charset="utf-8"></script>
+    <script src="../vendors/angular-route/angular-route.min.js" charset="utf-8"></script>
+    <script src="../scripts/client.js" charset="utf-8"></script>
+    <base href="/" />
+  </head>
+
+  <body ng-controller="MainController as main">
+    {{3+3}}
+    {{main.message}}
+
+    <div ng-view>
+
+    </div>
+    
+  </body>
+
+</html>
