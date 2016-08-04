@@ -1,4 +1,5 @@
 angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProvider) {
+
   $routeProvider.when('/', {
     templateUrl: '/views/login.html',
     controller: 'LoginController',
@@ -17,7 +18,15 @@ angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProv
 
   .when('/registrationFail', {
     templateUrl: '/views/registrationFail.html'
-  }),
+  });
 
-  $locationProvider.html5Mode(true)
-};
+  // .when('/main', {
+  //   templateUrl: 'views/main.html'
+  // }),
+  //
+  // .when('/history', {
+  //   templateUrl: 'views/history.html'
+  // }),
+
+  $locationProvider.html5Mode(true);
+});

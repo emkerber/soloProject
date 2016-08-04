@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
 var config = {
-  database: 'passport',
+  database: 'dingDogSwitch',
   port: 5432,
   max: 10,
   idleTimeoutMillis: 30000

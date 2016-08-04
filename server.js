@@ -24,40 +24,40 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use('local', new LocalStrategy({
-//   phoneNumberField: 'phone number',
-//   passwordField: 'password'
-// }, function(phoneNumber, password, done) {
-//   User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
-//     if (err) {
-//       return done(err);
-//     }
-//
-//     if (isMatch) {
-//       console.log('User successfully authorized');
-//       return done(null, user);
-//     } else {
-//       console.log('Failed to authorize user');
-//       done(null, false);
-//     }
-//   });
-// }));
+passport.use('local', new LocalStrategy({
+  phoneNumberField: 'phone number',
+  passwordField: 'password'
+}, function(phoneNumber, password, done) {
+  User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
+    if (err) {
+      return done(err);
+    }
 
-// //converts user to user id
-// passport.serializeUser(function(user, done) {
-//   done(null, user.id);
-// });
-//
-// //converts user id to user
-// passport.deserializeUser(function(id, done) {
-//   User.findById(id, function(err, user) {
-//     if (err) {
-//       console.log('Error deserializing user');
-//       return done(err);
-//     }
-//     done(null, user);
-//   });
-// });
+    if (isMatch) {
+      console.log('User successfully authorized');
+      return done(null, user);
+    } else {
+      console.log('Failed to authorize user');
+      done(null, false);
+    }
+  });
+}));
+
+//converts user to user id
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+//converts user id to user
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    if (err) {
+      console.log('Error deserializing user');
+      return done(err);
+    }
+    done(null, user);
+  });
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -67,18 +67,22 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
 
-// app.use('/login', login);
-// app.use('register', register);
+//Routes here are not redirected to login (if not authed)
+
+app.get('/*', function(request, response, next) {
+  if (request.user.isAuthenticated()) {
+    next();
+  } else {
+    response.redirect('/');
+  }
+});
+
+//Routes here ARE redirected to login (if not authed)
+
+app.use('/login', login);
+app.use('register', register);
 // app.use('/main', main);
 // app.use('/history', history);
-
-// app.use('/api', function(request, response, next) {
-//   if (request.isAuthenticated()) {
-//     next();
-//   } else {
-//     response.sendStatus(403);
-//   }
-// });
 
 app.get('/*', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));

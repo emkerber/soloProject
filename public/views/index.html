@@ -4,20 +4,24 @@
   <head>
     <meta charset="utf-8" />
     <title>Ding Dog Switch</title>
+    <link rel="stylesheet" href="../styles/stylesheet.css" />
     <script src="../vendors/angular/angular.min.js" charset="utf-8"></script>
     <script src="../vendors/angular-route/angular-route.min.js" charset="utf-8"></script>
-    <script src="../scripts/client.js" charset="utf-8"></script>
+    <script src="../scripts/dingDogSwitchApp.module.js" charset="utf-8"></script>
+    <script src="../scripts/dingDogSwitchApp.config.js" charset="utf-8"></script>
+    <script src="../scripts/LoginController.js" charset="utf-8"></script>
+    <script src="../scripts/RegisterController.js" charset="utf-8"></script>
+    <script src="../scripts/MainController.js" charset="utf-8"></script>
+    <script src="../scripts/HistoryController.js" charset="utf-8"></script>
     <base href="/" />
   </head>
 
-  <body ng-controller="MainController as main">
-    {{3+3}}
-    {{main.message}}
+  <body>
 
-    <div ng-view>
+    <h1>Ding Dog Switch</h1>
 
-    </div>
-    
+    <div ng-view></div>
+
   </body>
 
 </html>
