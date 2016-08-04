@@ -67,9 +67,17 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
 
-//Routes here are not redirected to login (if not authed)
 
-app.get('/*', function(request, response, next) {
+
+//Routes here ARE redirected to login (if not authed)
+
+app.use('/login', login);
+app.use('/register', register);
+// app.use('/api/main', main);
+// app.use('/api/history', history
+
+//Routes here are not redirected to login (if not authed)
+app.get('/api/*', function(request, response, next) {
   if (request.isAuthenticated()) {
     next();
   } else {
@@ -77,12 +85,6 @@ app.get('/*', function(request, response, next) {
   }
 });
 
-//Routes here ARE redirected to login (if not authed)
-
-app.use('/login', login);
-app.use('/register', register);
-// app.use('/main', main);
-// app.use('/history', history);
 
 app.get('/*', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));
