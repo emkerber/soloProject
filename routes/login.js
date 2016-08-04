@@ -1,21 +1,17 @@
 var router = require('express').Router();
 var passport = require('passport');
 
-router.get('/', function(request, response) {
-  response.send(request.isAuthenticated());
-});
-
-router.get('/main', function(request, response) {
+router.get('/success', function(request, response) {
   response.sendStatus(200);
 });
 
-router.get('/loginFail', function(request, response) {
+router.get('/fail', function(request, response) {
   response.sendStatus(401);
 });
 
 router.post('/', passport.authenticate('local', {
-  successRedirect: '/main',
-  failureRedirect: '/loginFail'
+  successRedirect: '/login/success',
+  failureRedirect: '/login/fail'
 }));
 
 module.exports = router;

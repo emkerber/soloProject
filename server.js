@@ -25,7 +25,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use('local', new LocalStrategy({
-  phoneNumberField: 'phone number',
+  usernameField: 'phoneNumber',
   passwordField: 'password'
 }, function(phoneNumber, password, done) {
   User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
@@ -70,7 +70,7 @@ app.get('/', function(request, response) {
 //Routes here are not redirected to login (if not authed)
 
 app.get('/*', function(request, response, next) {
-  if (request.user.isAuthenticated()) {
+  if (request.isAuthenticated()) {
     next();
   } else {
     response.redirect('/');
@@ -80,7 +80,7 @@ app.get('/*', function(request, response, next) {
 //Routes here ARE redirected to login (if not authed)
 
 app.use('/login', login);
-app.use('register', register);
+app.use('/register', register);
 // app.use('/main', main);
 // app.use('/history', history);
 

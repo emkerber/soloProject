@@ -18,11 +18,11 @@ angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProv
 
   .when('/registrationFail', {
     templateUrl: '/views/registrationFail.html'
-  });
+  })
 
-  // .when('/main', {
-  //   templateUrl: 'views/main.html'
-  // }),
+  .when('/main', {
+    templateUrl: 'views/main.html'
+  });
   //
   // .when('/history', {
   //   templateUrl: 'views/history.html'

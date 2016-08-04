@@ -12,7 +12,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-function findByPhoneNumber(phoneNumber, callback) {
+function findByPhoneNumber(phonenumber, callback) {
 
   pool.connect(function(err, client, done) {
 
@@ -22,7 +22,7 @@ function findByPhoneNumber(phoneNumber, callback) {
       return callback(err);
     }
 
-    client.query('SELECT * FROM users WHERE phoneNumber=$1;', [phoneNumber], function(err, result) {
+    client.query('SELECT * FROM users WHERE phonenumber=$1;', [phonenumber], function(err, result) {
 
       if (err) {
         done();
@@ -36,7 +36,7 @@ function findByPhoneNumber(phoneNumber, callback) {
   });
 }
 
-function create(phoneNumber, password, callback) {
+function create(phonenumber, password, callback) {
 
   bcrypt.hash(password, SALT_WORK_FACTOR, function(err, hash) {
 
@@ -48,8 +48,8 @@ function create(phoneNumber, password, callback) {
         return callback(err);
       }
 
-      client.query('INSERT INTO users (phoneNumber, password) ' +
-      'VALUES ($1, $2) RETURNING id, phoneNumber;', [phoneNumber, hash],
+      client.query('INSERT INTO users (phonenumber, password) ' +
+      'VALUES ($1, $2) RETURNING id, phonenumber;', [phonenumber, hash],
       function(err, result) {
 
         if (err) {
@@ -65,18 +65,18 @@ function create(phoneNumber, password, callback) {
   });
 }
 
-function findAndComparePassword(phoneNumber, candidatePassword, callback) {
+function findAndComparePassword(phonenumber, candidatePassword, callback) {
 
-  findByPhoneNumber(phoneNumber, function(err, user) {
+  findByPhoneNumber(phonenumber, function(err, user) {
 
     if (err) {
-      console.log('Error finding by phoneNumber to compare passwords');
+      console.log('Error finding by phonenumber to compare passwords');
       return callback(err);
     }
 
     if (!user) {
       console.log('User does not exist!');
-      return callback(null, false);
+      return callback(err);
     }
 
     bcrypt.compare(candidatePassword, user.password, function(err, isMatch) {
@@ -92,8 +92,28 @@ function findAndComparePassword(phoneNumber, candidatePassword, callback) {
   });
 }
 
+function findById(id, callback) {
+  pool.connect(function(err, client, done) {
+    if (err) {
+      done();
+      return callback(err);
+    }
+
+    client.query('SELECT * FROM users WHERE id=$1;', [id], function(err, result) {
+      if (err) {
+        done();
+        return callback(err);
+      }
+
+      callback(null, result.rows[0]);
+      done();
+    });
+  });
+}
+
 module.exports = {
   findByPhoneNumber: findByPhoneNumber,
   create: create,
-  findAndComparePassword: findAndComparePassword
+  findAndComparePassword: findAndComparePassword,
+  findById: findById
 };

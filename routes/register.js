@@ -3,19 +3,18 @@ var path = require('path');
 
 var User = require('../models/user');
 
-router.get('/', function(request, response) {
+router.post('/', function(request, response) {
   if (request.body.passwordFirst === request.body.passwordSecond) {
-    router.post('/', function(request, response) {
-      User.create(request.body.phoneNumber, request.body.passwordFirst, function(err) {
-        if (err) {
-          console.log('Error creating new user', err);
-        } else {
-          response.redirect('../');
-        }
-      });
+    User.create(request.body.phoneNumber, request.body.passwordFirst, function(err) {
+      if (err) {
+        console.log('Error creating new user', err);
+        response.sendStatus(500);
+      } else {
+        response.sendStatus(200);
+      }
     });
   } else {
-    response.redirect('../registrationFail');
+    response.sendStatus(400);
   }
 });
 
