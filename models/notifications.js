@@ -22,7 +22,7 @@ function create(text, callback) {
 
     var date = new Date();
 
-    client.query('INSERT INTO notifications (date, text) VALUES ($1, $2) RETURNING id;', [date, text],
+    client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3) RETURNING id;', ['9522124862', date, text],
     function(err, result) {
 
       if (err) {

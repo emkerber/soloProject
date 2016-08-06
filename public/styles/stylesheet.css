@@ -99,4 +99,9 @@ a {
 
 .records {
   font-family: 'Roboto', sans-serif;
+	list-style: none;
+}
+
+div .space {
+	margin: 5% 0;
 }

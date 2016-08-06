@@ -20,13 +20,17 @@ angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProv
     templateUrl: '/views/registrationFail.html'
   })
 
-  .when('/main', {
-    templateUrl: 'views/main.html'
+  .when('/api/main', {
+    templateUrl: 'views/main.html',
+    controller: 'MainController',
+    controllerAs: 'main'
+  })
+
+  .when('/api/history', {
+    templateUrl: 'views/history.html',
+    controller: 'HistoryController',
+    controllerAs: 'history'
   });
-  //
-  // .when('/history', {
-  //   templateUrl: 'views/history.html'
-  // }),
 
   $locationProvider.html5Mode(true);
 });

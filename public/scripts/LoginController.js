@@ -18,7 +18,7 @@ angular.module('dingDogSwitchApp').controller('LoginController', function($http,
 
   function handleSuccess(response) {
     console.log('Success posting login info', response);
-    $location.path('/main');
+    $location.path('/api/main');
   };
 
   function handleFailure(response) {

@@ -1,3 +1,20 @@
-<p>
-  LOGGED IN!
-</p>
+<h2>Recent Notifications</h2>
+
+<ul class="records">
+  <li ng-repeat="item in main.list">
+    {{item}}
+  </li>
+</ul>
+
+<a href="/api/history"><button>View All</button></a>
+
+<div class="space"></div>
+
+<h2>Change the Content of Your Texts</h2>
+<label>I want texts to read: </label>
+<input type="text" ng-model="main.textContent" maxlength="140" placeholder="limit 140 characters" />
+<button ng-click="main.update()">Update!</button>
+
+<div class="space"></div>
+
+<a href="/"><button ng-click="main.logout()">Log out</button></a>

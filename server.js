@@ -7,15 +7,17 @@ var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('./models/user');
 var login = require('./routes/login');
 var register = require('./routes/register');
-var main = require('./routes/main');
-var history = require('./routes/history');
+var main = require('./routes/api/main');
+var history = require('./routes/api/history');
+
+var User = require('./models/user');
+var Notification = require('./models/notifications');
 
 var Particle = require('particle-api-js');
 var particle = new Particle();
-var Notification = require('./models/notifications');
+
 
 
 app.use(session({
@@ -68,10 +70,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.get('/', function(request, response) {
-  response.sendFile(path.join(__dirname, 'public/views/index.html'));
-});
-
+// app.get('/', function(request, response) {
+//   response.sendFile(path.join(__dirname, 'public/views/index.html'));
+// });
+//
 
 
 //Routes here ARE redirected to login (if not authed)
@@ -120,11 +122,6 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
   }
 );
 
-// function(phoneNumber, password, done) {
-//  User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
-//    if (err) {
-//      return done(err);
-//    }
 
 // //DATA RETURNED FROM EVENT
 // { data: 'null',
