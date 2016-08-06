@@ -71,7 +71,7 @@ h2 {
 
 input {
   margin-bottom: 2%;
-  background-color: #DAF7A6;
+  background-color: #E6E6FA;
   width: 30%;
   font-size: 160%;
   font-family: 'Reem Kufi', sans-serif;
@@ -79,8 +79,8 @@ input {
 }
 
 button {
-  margin-bottom: 2%;
-  border-color: #FF4500;
+  margin: 0 0.5% 2% 0.5%;
+  border-color: #663399;
   border-radius: 25%;
   background-color:#FF7F50;
   font-size: 120%;
@@ -95,6 +95,10 @@ p {
 
 a {
   color: #2E8B57;
+}
+
+label {
+	font-size: 120%;
 }
 
 .records {
