@@ -13,6 +13,11 @@ var register = require('./routes/register');
 var main = require('./routes/main');
 var history = require('./routes/history');
 
+var Particle = require('particle-api-js');
+var particle = new Particle();
+var Notification = require('./models/notifications');
+
+
 app.use(session({
   secret: 'beagle',
   key: 'user',
@@ -86,9 +91,59 @@ app.get('/api/*', function(request, response, next) {
 });
 
 
+
 app.get('/*', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
+
+
+
+particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
+  function(data) {
+    console.log('API call completed on promise resolve: ', data.body.access_token);
+    particle.getEventStream({ deviceId: '3a0027001647343339383037', auth: data.body.access_token })
+    .then(function(stream) {
+      stream.on('event', function(data) {
+        console.log('Event: ', data);
+        Notification.create(data.name, function(err) {
+          if (err) {
+            console.log('Error recording button press');
+          } else {
+            console.log('Success recording button press!!');
+          }
+        });
+      });
+    });
+  },
+  function(err) {
+    console.log('API call completed on promise fail: ', err);
+  }
+);
+
+// function(phoneNumber, password, done) {
+//  User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
+//    if (err) {
+//      return done(err);
+//    }
+
+// //DATA RETURNED FROM EVENT
+// { data: 'null',
+//   ttl: '60',
+//   published_at: '2016-08-05T23:08:26.737Z',
+//   coreid: '3a0027001647343339383037',
+//   name: 'buttonState' }
+
+// //DEVICE INFO
+// { id: '3a0027001647343339383037',
+//   name: 'blue',
+//   last_app: null,
+//   last_ip_address: '204.62.150.131',
+//   last_heard: '2016-08-05T19:30:43.706Z',
+//   product_id: 6,
+//   connected: true,
+//   platform_id: 6,
+//   cellular: false,
+//   status: 'normal' }
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
