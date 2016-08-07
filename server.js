@@ -32,10 +32,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use('local', new LocalStrategy({
-  usernameField: 'phoneNumber',
+  usernameField: 'phonenumber',
   passwordField: 'password'
-}, function(phoneNumber, password, done) {
-  User.findAndComparePassword(phoneNumber, password, function(err, isMatch, user) {
+}, function(phonenumber, password, done) {
+  User.findAndComparePassword(phonenumber, password, function(err, isMatch, user) {
     if (err) {
       return done(err);
     }
@@ -80,8 +80,8 @@ app.use(express.static('public'));
 
 app.use('/login', login);
 app.use('/register', register);
-// app.use('/api/main', main);
-// app.use('/api/history', history
+app.use('/api/main', main);
+app.use('/api/history', history);
 
 //Routes here are not redirected to login (if not authed)
 app.get('/api/*', function(request, response, next) {

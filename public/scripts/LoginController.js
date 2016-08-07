@@ -10,7 +10,7 @@ angular.module('dingDogSwitchApp').controller('LoginController', function($http,
 
     var sendData = {};
 
-    sendData.phoneNumber = vm.phoneNumber;
+    sendData.phonenumber = vm.phoneNumber;
     sendData.password = vm.password;
 
     $http.post('/login', sendData).then(handleSuccess, handleFailure);
