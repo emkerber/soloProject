@@ -122,7 +122,6 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
   }
 );
 
-
 // //DATA RETURNED FROM EVENT
 // { data: 'null',
 //   ttl: '60',
@@ -141,6 +140,18 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
 //   platform_id: 6,
 //   cellular: false,
 //   status: 'normal' }
+
+// app.get('/api/main', function(request, response, data) {
+//
+//   Notification.selectFive(function(err) {
+//     if (err) {
+//       console.log('Error selecting five notification entries', err);
+//     } else {
+//       console.log('Success selecting five notification entries!');
+//       response.send(data);
+//     }
+//   });
+// });
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {

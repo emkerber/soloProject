@@ -1,8 +1,8 @@
 <h2>Recent Notifications</h2>
 
 <ul class="records">
-  <li ng-repeat="item in main.list">
-    {{item}}
+  <li ng-repeat="item in main.listDate track by $index">
+    {{item.date}}: "{{item.text}}"
   </li>
 </ul>
 
