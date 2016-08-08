@@ -20,6 +20,7 @@ var Notification = require('./models/notifications');
 var Particle = require('particle-api-js');
 var particle = new Particle();
 
+var twilioClient = require('twilio')('AC35239131a1041d2f37a681f00894956f', '044d69b3544d959fdcf9dfeb64776a90');
 
 //to query Postgres for the correct textcontent based on phonenumber
 var pool = new pg.Pool({database: 'dingDogSwitch', port: 5432});
@@ -109,29 +110,6 @@ app.get('/*', function(request, response) {
 
 
 
-
-
-// pool.connect(function(err, client, done) {
-//   if (err) {
-//     console.log('Error connecting to Postgres from server.js');
-//     done();
-//   }
-//
-//   client.query('SELECT textcontent FROM users WHERE phonenumber=$1;',
-//   [notificationPhonenumber], function(err, result) {
-//     if (err) {
-//       console.log('Error regarding client query from server.js');
-//       done();
-//     }
-//
-//     notificationText = result.rows[0].textcontent;
-//     console.log('text to be stored:', notificationText);
-//     done();
-//   });
-// });
-
-
-
 particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
 
   .then(function(data) {
@@ -157,7 +135,7 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
 
           //these will be used for storing a new notification on the database
           var notificationText = '';
-          var notificationPhonenumber = '123'; //hard code this
+          var notificationPhonenumber = '9522124862'; //hard code this
 
 
           client.query('SELECT textcontent FROM users WHERE phonenumber=$1;',
@@ -177,6 +155,18 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
                 console.log('Success recording button press!');
               }
             });
+
+            //send an SMS message using Twilio
+            twilioClient.sendMessage({
+              to: '+1' + notificationPhonenumber, //must be registered on the Twilio site before being used successfully
+              from: '+16122604368',
+              body: notificationText
+            }, function(err, responseData) { //executed when a response is received from Twilio
+              if (!err) {
+                console.log('Text successfully sent', responseData.body);
+              }
+            });
+
             done();
           });
         });
