@@ -66,11 +66,9 @@ h1 {
 
 h2 {
   font-size: 160%;
-  margin-bottom: 2%;
 }
 
 input {
-  margin-bottom: 2%;
   background-color: #E6E6FA;
   width: 30%;
   font-size: 160%;
@@ -88,13 +86,29 @@ button {
   color: #8B4513;
 }
 
+button:hover {
+	background-color: #FFA07A;
+}
+
 p, li, label {
   font-size: 130%;
   line-height: 1.5em;
 }
 
+h2, input, ul {
+	margin-bottom: 2%;
+}
+
 a {
   color: #2E8B57;
+}
+
+.fade {
+	transition: 0.5s linear all;
+}
+
+.fade.ng-enter {
+	opacity: 0;
 }
 
 .records {

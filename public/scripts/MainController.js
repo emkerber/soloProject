@@ -1,4 +1,4 @@
-angular.module('dingDogSwitchApp').controller('MainController', function($http) {
+angular.module('dingDogSwitchApp').controller('MainController', function($http, $timeout) {
   var vm = this;
 
   vm.updated = false;
@@ -37,6 +37,7 @@ angular.module('dingDogSwitchApp').controller('MainController', function($http) 
   function handleSuccess(response) {
     console.log('Success posting new text content', response);
     vm.updated = true;
+    $timeout(function() { vm.updated = false; }, 3000);
   };
 
   function handleFailure(response) {

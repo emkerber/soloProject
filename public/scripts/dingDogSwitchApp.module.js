@@ -1,1 +1,1 @@
-angular.module('dingDogSwitchApp', ['ngRoute']);
+angular.module('dingDogSwitchApp', ['ngRoute', 'ngAnimate']);
