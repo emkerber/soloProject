@@ -86,19 +86,7 @@ app.use('/login', login);
 app.use('/register', register);
 app.use('/api/main', main);
 app.use('/api/history', history);
-// app.use('api/main/update', main);
 
-
-// app.get('/api/main', function(request, response) {
-//   console.log('inside server getting api/main');
-//   User.updateTextContent(tempPhonenumber, request.textContent, function(err) {
-//     if (err) {
-//       console.log('Error updating text content from server');
-//     }
-//
-//   response.send('Completed updateTextContent function on server');
-//   });
-// });
 
 //Routes here are not redirected to login (if not authed)
 app.get('/api/*', function(request, response, next) {
@@ -134,7 +122,7 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
           if (err) {
             console.log('Error recording button press');
           } else {
-            console.log('Success recording button press!!');
+            console.log('Success recording button press!');
           }
         });
       });

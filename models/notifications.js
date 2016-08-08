@@ -19,7 +19,7 @@ function create(text, callback) {
 
     var date = new Date().toLocaleDateString() + ' at ' + new Date().toLocaleTimeString();
 
-    client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3) RETURNING id;', ['9522124862', date, text],
+    client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3) RETURNING id;', ['123', date, text],
     function(err, result) {
 
       if (err) {
@@ -56,7 +56,7 @@ function create(text, callback) {
 //   });
 // }
 
-function selectFive(callback) {
+function selectFive(phonenumber, callback) {
 
   pool.connect(function(err, client, done) {
 
@@ -66,7 +66,7 @@ function selectFive(callback) {
       return callback(err);
     }
 
-    client.query('SELECT date, text FROM notifications ORDER BY id DESC LIMIT 5;', function(err, result) {
+    client.query('SELECT date, text FROM notifications WHERE phonenumber=$1 ORDER BY id DESC LIMIT 5;', [phonenumber], function(err, result) {
 
       if (err) {
         done();
@@ -79,7 +79,7 @@ function selectFive(callback) {
   });
 }
 
-function selectAll(callback) {
+function selectAll(phonenumber, callback) {
 
   pool.connect(function(err, client, done) {
 
@@ -88,7 +88,7 @@ function selectAll(callback) {
       return callback(err);
     }
 
-    client.query('SELECT date, text FROM notifications ORDER BY id DESC;', function(err, result) {
+    client.query('SELECT date, text FROM notifications WHERE phonenumber=$1 ORDER BY id DESC;', [phonenumber], function(err, result) {
 
       if (err) {
         done();

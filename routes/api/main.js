@@ -6,7 +6,7 @@ var User = require('../../models/user');
 
 router.get('/', function(request, response) {
 
-  Notification.selectFive(function(err, notifications) {
+  Notification.selectFive(request.user.phonenumber, function(err, notifications) {
 
     if (err) {
       console.log('Error selecting five notifications', err);

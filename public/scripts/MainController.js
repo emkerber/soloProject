@@ -1,4 +1,4 @@
-angular.module('dingDogSwitchApp').controller('MainController', function($http, $location) {
+angular.module('dingDogSwitchApp').controller('MainController', function($http) {
   var vm = this;
 
   // Displays five most recent notifications

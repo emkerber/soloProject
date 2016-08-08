@@ -5,7 +5,7 @@ var Notification = require('../../models/notifications');
 
 router.get('/', function(request, response) {
 
-  Notification.selectAll(function(err, notifications) {
+  Notification.selectAll(request.user.phonenumber, function(err, notifications) {
 
     if (err) {
       console.log('Error selecting all notifications', err);
