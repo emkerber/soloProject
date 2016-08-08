@@ -8,8 +8,6 @@ void setup() {
 
     Particle.variable("buttonState", buttonState);
 
-    Serial.begin(9600);
-
     pinMode(button, INPUT_PULLUP);
 
 }
@@ -19,7 +17,7 @@ void loop() {
     buttonState = digitalRead(button);
 
     if (buttonState == LOW) {
-        Particle.publish("buttonState");
+        Particle.publish("button pressed");
         delay(2000);
     }
 
