@@ -3,6 +3,7 @@ var app = express();
 // var router = express.Router();
 var bodyParser = require('body-parser');
 var path = require('path');
+var pg = require('pg');
 
 var passport = require('passport');
 var session = require('express-session');
@@ -19,6 +20,9 @@ var Notification = require('./models/notifications');
 var Particle = require('particle-api-js');
 var particle = new Particle();
 
+
+//to query Postgres for the correct textcontent based on phonenumber
+var pool = new pg.Pool({database: 'dingDogSwitch', port: 5432});
 
 
 app.use(session({
@@ -106,6 +110,28 @@ app.get('/*', function(request, response) {
 
 
 
+
+// pool.connect(function(err, client, done) {
+//   if (err) {
+//     console.log('Error connecting to Postgres from server.js');
+//     done();
+//   }
+//
+//   client.query('SELECT textcontent FROM users WHERE phonenumber=$1;',
+//   [notificationPhonenumber], function(err, result) {
+//     if (err) {
+//       console.log('Error regarding client query from server.js');
+//       done();
+//     }
+//
+//     notificationText = result.rows[0].textcontent;
+//     console.log('text to be stored:', notificationText);
+//     done();
+//   });
+// });
+
+
+
 particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
 
   .then(function(data) {
@@ -117,17 +143,47 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
 
       stream.on('event', function(data) {
         console.log('Event: ', data);
-        Notification.create(textContent, function(err) {
 
+        // //these will be used for storing a new notification on the database
+        // var notificationText = '';
+        // var notificationPhonenumber = '123'; //hard code this
+
+        //to obtain the most recently updated text message content
+        pool.connect(function(err, client, done) {
           if (err) {
-            console.log('Error recording button press');
-          } else {
-            console.log('Success recording button press!');
+            console.log('Error connecting to Postgres from server.js');
+            done();
           }
+
+          //these will be used for storing a new notification on the database
+          var notificationText = '';
+          var notificationPhonenumber = '123'; //hard code this
+
+
+          client.query('SELECT textcontent FROM users WHERE phonenumber=$1;',
+          [notificationPhonenumber], function(err, result) {
+            if (err) {
+              console.log('Error regarding client query from server.js');
+              done();
+            }
+
+            notificationText = result.rows[0].textcontent;
+            console.log('text to be stored:', notificationText);
+            Notification.create(notificationPhonenumber, notificationText, function(err) {
+
+              if (err) {
+                console.log('Error recording button press');
+              } else {
+                console.log('Success recording button press!');
+              }
+            });
+            done();
+          });
         });
       });
     });
   },
+
   function(err) {
     console.log('API call completed on promise fail: ', err);
   }

@@ -88,8 +88,8 @@ button {
   color: #8B4513;
 }
 
-p, li {
-  font-size: 110%;
+p, li, label {
+  font-size: 130%;
   line-height: 1.5em;
 }
 
@@ -97,13 +97,13 @@ a {
   color: #2E8B57;
 }
 
-label {
-	font-size: 120%;
-}
-
 .records {
   font-family: 'Roboto', sans-serif;
 	list-style: none;
+}
+
+.biggerText {
+	font-size: 145%;
 }
 
 div .space {

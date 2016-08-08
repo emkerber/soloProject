@@ -7,7 +7,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-function create(text, callback) {
+function create(phonenumber, text, callback) {
 
   pool.connect(function(err, client, done) {
 
@@ -19,7 +19,7 @@ function create(text, callback) {
 
     var date = new Date().toLocaleDateString() + ' at ' + new Date().toLocaleTimeString();
 
-    client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3) RETURNING id;', ['123', date, text],
+    client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3);', [phonenumber, date, text],
     function(err, result) {
 
       if (err) {

@@ -25,7 +25,9 @@ router.post('/', function(request, response) {
 
   User.updateTextContent(currentUser, textContent, function(err) {
     if (err) {
-      console.log('Error updating text content from server');
+      response.sendStatus(500);
+    } else {
+      response.sendStatus(204);
     }
   });
 });
