@@ -1,7 +1,7 @@
 <h2>Recent Notifications</h2>
 
 <ul class="records">
-  <li ng-repeat="item in main.listDate track by $index">
+  <li ng-repeat="item in main.list track by $index">
     {{item.date}}: "{{item.text}}"
   </li>
 </ul>
@@ -17,4 +17,4 @@
 
 <div class="space"></div>
 
-<a href="/"><button ng-click="main.logout()">Log out</button></a>
+<a href="/"><button>Log out</button></a>

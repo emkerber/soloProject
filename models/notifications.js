@@ -17,9 +17,6 @@ function create(text, callback) {
       return callback(err);
     }
 
-    //also insert date and time
-
-
     var date = new Date().toLocaleDateString() + ' at ' + new Date().toLocaleTimeString();
 
     client.query('INSERT INTO notifications (phonenumber, date, text) VALUES ($1, $2, $3) RETURNING id;', ['9522124862', date, text],
@@ -37,27 +34,27 @@ function create(text, callback) {
   });
 }
 
-function findById(id, callback) {
-
-  pool.connect(function(err, client, done) {
-
-    if (err) {
-      done();
-      return callback(err);
-    }
-
-    client.query('SELECT * FROM users WHERE id=$1;', [id], function(err, result) {
-
-      if (err) {
-        done();
-        return callback(err);
-      }
-
-      callback(null, result.rows[0]);
-      done();
-    });
-  });
-}
+// function findById(id, callback) {
+//
+//   pool.connect(function(err, client, done) {
+//
+//     if (err) {
+//       done();
+//       return callback(err);
+//     }
+//
+//     client.query('SELECT * FROM users WHERE id=$1;', [id], function(err, result) {
+//
+//       if (err) {
+//         done();
+//         return callback(err);
+//       }
+//
+//       callback(null, result.rows[0]);
+//       done();
+//     });
+//   });
+// }
 
 function selectFive(callback) {
 
@@ -98,8 +95,7 @@ function selectAll(callback) {
         return callback(err);
       }
 
-      callback(null,
-        [result.rows[0], result.rows[1], result.rows[2], result.rows[3], result.rows[4]]);
+      callback(null, result);
       done();
     });
   });
@@ -108,7 +104,7 @@ function selectAll(callback) {
 
 module.exports = {
   create: create,
-  findById: findById,
+  // findById: findById,
   selectFive: selectFive,
   selectAll: selectAll
 };

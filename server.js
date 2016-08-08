@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+// var router = express.Router();
 var bodyParser = require('body-parser');
 var path = require('path');
 
@@ -31,6 +32,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// var tempPhonenumber = '';
+
 passport.use('local', new LocalStrategy({
   usernameField: 'phonenumber',
   passwordField: 'password'
@@ -42,6 +45,8 @@ passport.use('local', new LocalStrategy({
 
     if (isMatch) {
       console.log('User successfully authorized');
+      // tempPhonenumber = phonenumber;
+      // console.log('tempPhonenumber stored as', tempPhonenumber);
       return done(null, user);
     } else {
       console.log('Failed to authorize user');
@@ -77,11 +82,23 @@ app.use(express.static('public'));
 
 
 //Routes here ARE redirected to login (if not authed)
-
 app.use('/login', login);
 app.use('/register', register);
 app.use('/api/main', main);
 app.use('/api/history', history);
+// app.use('api/main/update', main);
+
+
+// app.get('/api/main', function(request, response) {
+//   console.log('inside server getting api/main');
+//   User.updateTextContent(tempPhonenumber, request.textContent, function(err) {
+//     if (err) {
+//       console.log('Error updating text content from server');
+//     }
+//
+//   response.send('Completed updateTextContent function on server');
+//   });
+// });
 
 //Routes here are not redirected to login (if not authed)
 app.get('/api/*', function(request, response, next) {
@@ -93,21 +110,27 @@ app.get('/api/*', function(request, response, next) {
 });
 
 
-
 app.get('/*', function(request, response) {
   response.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
 
 
 
-particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
-  function(data) {
+
+
+particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
+
+  .then(function(data) {
+
     console.log('API call completed on promise resolve: ', data.body.access_token);
     particle.getEventStream({ deviceId: '3a0027001647343339383037', auth: data.body.access_token })
+
     .then(function(stream) {
+
       stream.on('event', function(data) {
         console.log('Event: ', data);
-        Notification.create(data.name, function(err) {
+        Notification.create(textContent, function(err) {
+
           if (err) {
             console.log('Error recording button press');
           } else {
@@ -122,14 +145,14 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
   }
 );
 
-// //DATA RETURNED FROM EVENT
+// //DATA RETURNED FROM EVENT (PHOTON BUTTON PRESSED)
 // { data: 'null',
 //   ttl: '60',
 //   published_at: '2016-08-05T23:08:26.737Z',
 //   coreid: '3a0027001647343339383037',
 //   name: 'buttonState' }
 
-// //DEVICE INFO
+// // PHOTON DEVICE INFO
 // { id: '3a0027001647343339383037',
 //   name: 'blue',
 //   last_app: null,
@@ -141,17 +164,6 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'}).then(
 //   cellular: false,
 //   status: 'normal' }
 
-// app.get('/api/main', function(request, response, data) {
-//
-//   Notification.selectFive(function(err) {
-//     if (err) {
-//       console.log('Error selecting five notification entries', err);
-//     } else {
-//       console.log('Success selecting five notification entries!');
-//       response.send(data);
-//     }
-//   });
-// });
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {

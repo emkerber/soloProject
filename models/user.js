@@ -111,9 +111,30 @@ function findById(id, callback) {
   });
 }
 
+function updateTextContent(phonenumber, textcontent, callback) {
+  pool.connect(function(err, client, done) {
+    if (err) {
+      done();
+      return callback(err);
+    }
+
+    client.query('UPDATE users SET textcontent=$1 WHERE phonenumber=$2;', [textcontent, phonenumber],
+    function(err, result) {
+      if (err) {
+        done();
+        return callback(err);
+      }
+
+      callback(null);
+      done();
+    });
+  });
+}
+
 module.exports = {
   findByPhoneNumber: findByPhoneNumber,
   create: create,
   findAndComparePassword: findAndComparePassword,
-  findById: findById
+  findById: findById,
+  updateTextContent: updateTextContent
 };
