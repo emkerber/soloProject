@@ -48,13 +48,15 @@ table {
 	border-spacing: 0;
 }
 
+
 /* End CSS reset */
+
 
 body {
   background-color: #D3D3D3;
   background-image: url(shattered/shattered_@2x.png);
   text-align: center;
-  font-family: 'Reem Kufi', sans-serif;
+  font-family: 'Reem Kufi', sans-serif; /*font is from Google*/
   color: #8B4513;
 }
 
