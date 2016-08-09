@@ -1,14 +1,14 @@
-//configures AngularJS's ngRoutes for the dingDogSwitchApp module 
+// configures AngularJS's ngRoutes for the dingDogSwitchApp module
 angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProvider) {
 
-  //when the app is first loaded, the login page is shown
+  // when the app is first loaded, the login page is shown
   $routeProvider.when('/', {
     templateUrl: '/views/login.html',
     controller: 'LoginController',
     controllerAs: 'login'
   })
 
-  //contains an <a> tag link back to the login page, no Angular needed
+  // contains an <a> tag link back to the login page, no Angular needed
   .when('/loginFail', {
     templateUrl: '/views/loginFail.html'
   })
@@ -19,25 +19,25 @@ angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProv
     controllerAs: 'register'
   })
 
-  //contains an <a> tag link back to the register page, no Angular needed
+  // contains an <a> tag link back to the register page, no Angular needed
   .when('/registrationFail', {
     templateUrl: '/views/registrationFail.html'
   })
 
-  //this page is behind /api for security purposes
+  // this view is behind /api for security purposes
   .when('/api/main', {
     templateUrl: 'views/main.html',
     controller: 'MainController',
     controllerAs: 'main'
   })
 
-  //this page is behind /api for security purposes
+  // this view is behind /api for security purposes
   .when('/api/history', {
     templateUrl: 'views/history.html',
     controller: 'HistoryController',
     controllerAs: 'history'
   });
 
-  //HTML5 conventions
+  // HTML5 conventions
   $locationProvider.html5Mode(true);
 });

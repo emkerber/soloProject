@@ -1,10 +1,10 @@
-//History Controller
+// History Controller
 angular.module('dingDogSwitchApp').controller('HistoryController', function($http) {
-  var vm = this; //controllerAs syntax is used
+  var vm = this; // controllerAs syntax is used
 
   vm.list = [];
 
-  //displays complete notification history
+  // displays complete notification history
   function displayList() {
 
     $http.get('/api/history').then(function(response) {
@@ -13,6 +13,6 @@ angular.module('dingDogSwitchApp').controller('HistoryController', function($htt
     });
   };
 
-  //calls the function, so it displays when the view loads
+  // calls the function, so it displays when the view loads
   displayList();
 });

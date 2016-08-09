@@ -1,11 +1,11 @@
-//Main Controller
+// Main Controller
 angular.module('dingDogSwitchApp').controller('MainController', function($http, $timeout) {
-  var vm = this; //controllerAs syntax
+  var vm = this; // controllerAs syntax
 
-  //will display the five most recent notifications
+  // will display the five most recent notifications
   vm.list = [];
 
-  //show the five most recent notifications on the DOM
+  // show the five most recent notifications on the DOM
   function displayList() {
 
     $http.get('/api/main').then(function(response) {
@@ -14,23 +14,23 @@ angular.module('dingDogSwitchApp').controller('MainController', function($http, 
     });
   };
 
-  //calls the function so the notifications are shown when the view loads
+  // calls the function so the notifications are shown when the view loads
   displayList();
 
-  //when the refresh button is clicked, $http.get the notifications again
+  // when the refresh button is clicked, $http.get the notifications again
   vm.refresh = function() {
     displayList();
   };
 
-  //hide the <p> tag that tells the user they've updated the text content
+  // hide the <p> tag that tells the user they've updated the text content
   vm.updated = false;
 
-  //sends updated text message content to the server
+  // sends updated text message content to the server
   vm.update = function() {
 
     var sendData = {};
 
-    //send the data that was entered on the DOM
+    // send the data that was entered on the DOM
     sendData.textContent = vm.textContent;
 
     // console.log('var sendData inside vm.update function:', sendData);
@@ -38,8 +38,8 @@ angular.module('dingDogSwitchApp').controller('MainController', function($http, 
     $http.post('/api/main', sendData).then(handleSuccess, handleFailure);
   };
 
-  //show the <p> tag that tells the user they've updated the text content
-  //hide the <p> tag after three seconds
+  // show the <p> tag that tells the user they've updated the text content
+  // hide the <p> tag after three seconds
   function handleSuccess(response) {
     // console.log('Success posting new text content', response);
     vm.updated = true;
