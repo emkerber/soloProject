@@ -1,5 +1,5 @@
-var pg = require('pg');
-var bcrypt = require('bcrypt');
+var pg = require('pg'); //PostgreSQL
+var bcrypt = require('bcrypt'); //for hashing passwords
 
 var SALT_WORK_FACTOR = 10;
 
@@ -12,6 +12,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+//finds the stored information for a user by their phonenumber (which acts as username)
 function findByPhoneNumber(phonenumber, callback) {
 
   pool.connect(function(err, client, done) {
@@ -36,10 +37,13 @@ function findByPhoneNumber(phonenumber, callback) {
   });
 }
 
+//adds a user to the users table, storing their password after it's been hashed
 function create(phonenumber, password, callback) {
 
+  //does the hashing
   bcrypt.hash(password, SALT_WORK_FACTOR, function(err, hash) {
 
+    //then makes the query
     pool.connect(function(err, client, done) {
 
       if (err) {
@@ -65,8 +69,10 @@ function create(phonenumber, password, callback) {
   });
 }
 
+//used for login, to check if the password entered matches the password stored for the phone number entered
 function findAndComparePassword(phonenumber, candidatePassword, callback) {
 
+  //first the phone number entered is looked up in the database
   findByPhoneNumber(phonenumber, function(err, user) {
 
     if (err) {
@@ -74,11 +80,13 @@ function findAndComparePassword(phonenumber, candidatePassword, callback) {
       return callback(err);
     }
 
+    //if the user isn't stored in the database:
     if (!user) {
       console.log('User does not exist!');
       return callback(err);
     }
 
+    //compare the hashed password to the password entered using bcrypt
     bcrypt.compare(candidatePassword, user.password, function(err, isMatch) {
 
       if (err) {
@@ -92,6 +100,7 @@ function findAndComparePassword(phonenumber, candidatePassword, callback) {
   });
 }
 
+//finds a user's information in the user table by searching for their id
 function findById(id, callback) {
   pool.connect(function(err, client, done) {
     if (err) {
@@ -111,6 +120,8 @@ function findById(id, callback) {
   });
 }
 
+//used when the texts' content is updated on the main view of the app
+//finds the correct user to update by checking who is logged into the app
 function updateTextContent(phonenumber, textcontent, callback) {
   pool.connect(function(err, client, done) {
     if (err) {
