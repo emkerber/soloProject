@@ -1,5 +1,6 @@
-//This file is not actually linked to the project;
-//code here is provided for reference purposes.
+//Code that is flashed to the Particle Photon is below
+//This file is not actually linked to the project
+//Code here is provided for reference purposes
 
 int button = D2;
 int buttonState;
