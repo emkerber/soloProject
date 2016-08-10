@@ -1,5 +1,5 @@
 // Register Controller
-angular.module('dingDogSwitchApp').controller('RegisterController', function($http, $location) {
+angular.module('dingDogSwitchApp').controller('RegisterController', ['$http', '$location', function($http, $location) {
   var vm = this; // controllerAs syntax
 
   // these will all be strings
@@ -31,4 +31,4 @@ angular.module('dingDogSwitchApp').controller('RegisterController', function($ht
     console.log('Failure posting registration info', response);
     $location.path('/registrationFail'); // show the registrationFail view
   };
-});
+}]);

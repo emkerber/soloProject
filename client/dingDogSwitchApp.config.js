@@ -1,5 +1,5 @@
 // configures AngularJS's ngRoutes for the dingDogSwitchApp module
-angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProvider) {
+angular.module('dingDogSwitchApp').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
   // when the app is first loaded, the login page is shown
   $routeProvider.when('/', {
@@ -40,4 +40,4 @@ angular.module('dingDogSwitchApp').config(function($routeProvider, $locationProv
 
   // HTML5 conventions
   $locationProvider.html5Mode(true);
-});
+}]);

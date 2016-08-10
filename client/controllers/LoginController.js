@@ -1,5 +1,5 @@
 // Login Controller
-angular.module('dingDogSwitchApp').controller('LoginController', function($http, $location) {
+angular.module('dingDogSwitchApp').controller('LoginController', ['$http', '$location', function($http, $location) {
   var vm = this; // controllerAs syntax
 
   // these will be strings
@@ -29,4 +29,4 @@ angular.module('dingDogSwitchApp').controller('LoginController', function($http,
     console.log('Failure posting login info', response);
     $location.path('/loginFail'); // show user the loginFail view
   };
-});
+}]);

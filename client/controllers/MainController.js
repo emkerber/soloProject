@@ -1,5 +1,5 @@
 // Main Controller
-angular.module('dingDogSwitchApp').controller('MainController', function($http, $timeout) {
+angular.module('dingDogSwitchApp').controller('MainController', ['$http', '$timeout', function($http, $timeout) {
   var vm = this; // controllerAs syntax
 
   // will display the five most recent notifications
@@ -36,6 +36,8 @@ angular.module('dingDogSwitchApp').controller('MainController', function($http, 
     // console.log('var sendData inside vm.update function:', sendData);
 
     $http.post('/api/main', sendData).then(handleSuccess, handleFailure);
+
+    vm.textContent = '';
   };
 
   // show the <p> tag that tells the user they've updated the text content
@@ -49,4 +51,4 @@ angular.module('dingDogSwitchApp').controller('MainController', function($http, 
   function handleFailure(response) {
     console.log('Failure posting new text content', response);
   };
-});
+}]);

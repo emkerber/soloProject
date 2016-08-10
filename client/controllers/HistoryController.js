@@ -1,5 +1,5 @@
 // History Controller
-angular.module('dingDogSwitchApp').controller('HistoryController', function($http) {
+angular.module('dingDogSwitchApp').controller('HistoryController', ['$http', function($http) {
   var vm = this; // controllerAs syntax is used
 
   vm.list = [];
@@ -15,4 +15,4 @@ angular.module('dingDogSwitchApp').controller('HistoryController', function($htt
 
   // calls the function, so it displays when the view loads
   displayList();
-});
+}]);
