@@ -25,7 +25,11 @@ var particle = new Particle();
 var twilioClient = require('twilio')('AC35239131a1041d2f37a681f00894956f', '044d69b3544d959fdcf9dfeb64776a90');
 
 // to query Postgres for the correct textcontent based on phonenumber
-var pool = new pg.Pool({database: 'dingDogSwitch', port: 5432});
+// pg.defaults.ssl = true;
+var pool = new pg.Pool({database: 'ding-dog-switch', port: 5432});
+
+
+
 
 
 
@@ -204,3 +208,6 @@ var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
   console.log('Server listening on port', server.address().port);
 });
+
+
+module.exports = server;

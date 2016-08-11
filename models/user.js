@@ -4,18 +4,21 @@ var bcrypt = require('bcrypt'); // for hashing passwords
 var SALT_WORK_FACTOR = 10;
 
 var config = {
-  database: 'dingDogSwitch',
+  database: 'ding-dog-switch',
   port: 5432,
   max: 10,
   idleTimeoutMillis: 30000
 };
+
+// pg.defaults.ssl = true;
 
 var pool = new pg.Pool(config);
 
 // finds the stored information for a user by their phonenumber (which acts as username)
 function findByPhoneNumber(phonenumber, callback) {
 
-  pool.connect(function(err, client, done) {
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
 
     if (err) {
       done();
@@ -44,7 +47,8 @@ function create(phonenumber, password, callback) {
   bcrypt.hash(password, SALT_WORK_FACTOR, function(err, hash) {
 
     // then makes the query
-    pool.connect(function(err, client, done) {
+    pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+    function(err, client, done) {
 
       if (err) {
         done();
@@ -102,7 +106,9 @@ function findAndComparePassword(phonenumber, candidatePassword, callback) {
 
 // finds a user's information in the user table by searching for their id
 function findById(id, callback) {
-  pool.connect(function(err, client, done) {
+
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
     if (err) {
       done();
       return callback(err);
@@ -123,7 +129,9 @@ function findById(id, callback) {
 // used when the texts' content is updated on the main view of the app
 // finds the correct user to update by checking who is logged into the app
 function updateTextContent(phonenumber, textcontent, callback) {
-  pool.connect(function(err, client, done) {
+
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
     if (err) {
       done();
       return callback(err);

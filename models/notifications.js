@@ -1,16 +1,19 @@
 var pg = require('pg'); // PostgreSQL
 
 var config = {
-  database: 'dingDogSwitch',
+  database: 'ding-dog-switch',
   port: 5432
 };
+
+// pg.defaults.ssl = true;
 
 var pool = new pg.Pool(config);
 
 // inserts a new notification into the notifications table
 function create(phonenumber, text, callback) {
 
-  pool.connect(function(err, client, done) {
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
 
     if (err) {
       done();
@@ -39,7 +42,8 @@ function create(phonenumber, text, callback) {
 // gets the information for a specific notification based on id
 // function findById(id, callback) {
 //
-//   pool.connect(function(err, client, done) {
+//   pool.connect(process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+//   function(err, client, done) {
 //
 //     if (err) {
 //       done();
@@ -62,7 +66,8 @@ function create(phonenumber, text, callback) {
 // returns the date and text content of the five most recent notifications
 function selectFive(phonenumber, callback) {
 
-  pool.connect(function(err, client, done) {
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
 
     if (err) {
       done();
@@ -86,7 +91,8 @@ function selectFive(phonenumber, callback) {
 // returns the date and text content of all of the notifications, with the most recent first
 function selectAll(phonenumber, callback) {
 
-  pool.connect(function(err, client, done) {
+  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
+  function(err, client, done) {
 
     if (err) {
       done();

@@ -37,6 +37,7 @@
     "twilio": "^2.9.2"
   },
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "supertest": "^2.0.0"
   }
 }
