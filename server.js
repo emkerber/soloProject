@@ -6,7 +6,8 @@ var pg = require('pg');
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
-
+require('dotenv').config();
+console.log('using ssl?:', process.env.SSL);
 // Express routes
 var login = require('./routes/login');
 var register = require('./routes/register');

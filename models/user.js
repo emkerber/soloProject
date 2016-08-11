@@ -1,14 +1,22 @@
 var pg = require('pg'); // PostgreSQL
 var bcrypt = require('bcrypt'); // for hashing passwords
+var url = require('url');
 
 var SALT_WORK_FACTOR = 10;
 
+var params = url.parse(process.env.DATABASE_URL);
+var auth = params.auth ? params.auth.split(':') : [null, null];
+
 var config = {
-  database: 'ding-dog-switch',
-  port: 5432,
-  max: 10,
-  idleTimeoutMillis: 30000
+  user: auth[0],
+  password: auth[1],
+  host: params.hostname,
+  port: params.port,
+  database: params.pathname.split('/')[1],
+  ssl: process.env.SSL
 };
+
+
 
 // pg.defaults.ssl = true;
 
