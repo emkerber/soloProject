@@ -1,26 +1,9 @@
-var pg = require('pg'); // PostgreSQL
+var pool = require('./config');
 var bcrypt = require('bcrypt'); // for hashing passwords
-var url = require('url');
+
 
 var SALT_WORK_FACTOR = 10;
 
-var params = url.parse(process.env.DATABASE_URL);
-var auth = params.auth ? params.auth.split(':') : [null, null];
-
-var config = {
-  user: auth[0],
-  password: auth[1],
-  host: params.hostname,
-  port: params.port,
-  database: params.pathname.split('/')[1],
-  ssl: process.env.SSL
-};
-
-
-
-// pg.defaults.ssl = true;
-
-var pool = new pg.Pool(config);
 
 // finds the stored information for a user by their phonenumber (which acts as username)
 function findByPhoneNumber(phonenumber, callback) {

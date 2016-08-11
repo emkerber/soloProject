@@ -1,13 +1,5 @@
-var pg = require('pg'); // PostgreSQL
+var pool = require('./config');
 
-var config = {
-  database: 'ding-dog-switch',
-  port: 5432
-};
-
-// pg.defaults.ssl = true;
-
-var pool = new pg.Pool(config);
 
 // inserts a new notification into the notifications table
 function create(phonenumber, text, callback) {

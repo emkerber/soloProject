@@ -2,12 +2,12 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
-var pg = require('pg');
 var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
-console.log('using ssl?:', process.env.SSL);
+var pool = require('./models/config');
+
 // Express routes
 var login = require('./routes/login');
 var register = require('./routes/register');
@@ -24,12 +24,6 @@ var particle = new Particle();
 
 // Twilio is the service used for sending SMS messages
 var twilioClient = require('twilio')('AC35239131a1041d2f37a681f00894956f', '044d69b3544d959fdcf9dfeb64776a90');
-
-// to query Postgres for the correct textcontent based on phonenumber
-// pg.defaults.ssl = true;
-var pool = new pg.Pool({database: 'ding-dog-switch', port: 5432});
-
-
 
 
 
