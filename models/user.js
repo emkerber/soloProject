@@ -8,8 +8,7 @@ var SALT_WORK_FACTOR = 10;
 // finds the stored information for a user by their phonenumber (which acts as username)
 function findByPhoneNumber(phonenumber, callback) {
 
-  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
-  function(err, client, done) {
+  pool.connect(function(err, client, done) {
 
     if (err) {
       done();
@@ -38,8 +37,7 @@ function create(phonenumber, password, callback) {
   bcrypt.hash(password, SALT_WORK_FACTOR, function(err, hash) {
 
     // then makes the query
-    pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
-    function(err, client, done) {
+    pool.connect(function(err, client, done) {
 
       if (err) {
         done();
@@ -98,8 +96,7 @@ function findAndComparePassword(phonenumber, candidatePassword, callback) {
 // finds a user's information in the user table by searching for their id
 function findById(id, callback) {
 
-  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
-  function(err, client, done) {
+  pool.connect(function(err, client, done) {
     if (err) {
       done();
       return callback(err);
@@ -121,8 +118,7 @@ function findById(id, callback) {
 // finds the correct user to update by checking who is logged into the app
 function updateTextContent(phonenumber, textcontent, callback) {
 
-  pool.connect( // process.env.postgres:\/\/jlsximhokqedhg:bikw6jCbVnZjcZy8CAoC8TzLYn@ec2-54-243-48-181.compute-1.amazonaws.com:5432/di5sg15h9sqkr,
-  function(err, client, done) {
+  pool.connect(function(err, client, done) {
     if (err) {
       done();
       return callback(err);

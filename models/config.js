@@ -13,4 +13,4 @@ var config = {
   ssl: process.env.SSL
 };
 
-module.exports = new pg.Pool(config);;
+module.exports = new pg.Pool(config);
