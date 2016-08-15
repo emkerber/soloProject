@@ -160,7 +160,7 @@ particle.login({username: 'hello@primeacademy.io', password: 'primeiot'})
             }
 
             notificationText = result.rows[0].textcontent;
-            // console.log('text to be stored:', notificationText);
+            console.log('text to be stored:', notificationText);
 
             // store a new notification in the database
             Notification.create(notificationPhonenumber, notificationText, function(err) {
