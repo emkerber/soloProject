@@ -1,6 +1,8 @@
 Ding Dog Switch
 ===============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/emkerber/soloProject.svg)](https://greenkeeper.io/)
+
 This application is being hosted on Heroku at http://ding-dog-switch.herokuapp.com.
 
 This was a solo project for Prime Digital Academy. The goal of the assignment was to build a full-stack application. Two weeks were given to complete the application, during which time the student was to design and build the whole application from the ground up. The student chose what the function of the application would be and which frameworks would be used.
